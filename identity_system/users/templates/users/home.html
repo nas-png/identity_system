@@ -1,0 +1,108 @@
+{% extends "users/base.html" %}
+
+{% block title %}Identity System - Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 text-center mb-5">
+        <h1 class="display-4">🆔 User Identity System</h1>
+        <p class="lead">Manage user registrations and records</p>
+    </div>
+</div>
+
+<!-- Stats -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center bg-primary text-white">
+            <div class="card-body">
+                <h2>{{ total_users }}</h2>
+                <p class="mb-0">Total Users</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center bg-success text-white">
+            <div class="card-body">
+                <h2>✓</h2>
+                <p class="mb-0">System Active</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center bg-info text-white">
+            <div class="card-body">
+                <h2>🔒</h2>
+                <p class="mb-0">PostgreSQL</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Actions -->
+<div class="row mb-5">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h3>➕ Register New User</h3>
+                <p>Add a new user with unique ID</p>
+                <a href="{% url 'register_user' %}" class="btn btn-primary btn-lg">Register User</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h3>👥 View All Users</h3>
+                <p>Browse and manage users</p>
+                <a href="{% url 'user_list' %}" class="btn btn-info btn-lg">View Users</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Users -->
+{% if recent_users %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h4 class="mb-0">Recently Registered</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Registered</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in recent_users %}
+                        <tr>
+                            <td><strong>{{ user.unique_id }}</strong></td>
+                            <td>{{ user.full_name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.created_at|date:"M d, Y" }}</td>
+                            <td>
+                                <a href="{% url 'user_detail' user.pk %}" class="btn btn-sm btn-info">View</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info text-center">
+    <h4>No Users Yet</h4>
+    <p>Start by registering your first user!</p>
+    <a href="{% url 'register_user' %}" class="btn btn-primary">Register First User</a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,38 @@
+<h2>Users</h2>
+
+<form method="GET" action="/search/">
+
+<input type="text" name="q" placeholder="Search user">
+<button type="submit">Search</button>
+
+</form>
+
+<table border="1">
+
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Email</th>
+<th>Phone</th>
+<th>Edit</th>
+</tr>
+
+{% for user in users %}
+
+<tr>
+
+<td>{{ user.user_number }}</td>
+
+<td>{{ user.first_name }} {{ user.last_name }}</td>
+
+<td>{{ user.email }}</td>
+
+<td>{{ user.phone }}</td>
+
+<td><a href="/edit/{{ user.id }}">Edit</a></td>
+
+</tr>
+
+{% endfor %}
+
+</table>
